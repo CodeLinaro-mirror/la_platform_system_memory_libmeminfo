@@ -47,6 +47,7 @@ class SysMemInfo final {
     static constexpr const char kMemMapped[] = "Mapped:";
     static constexpr const char kMemVmallocUsed[] = "VmallocUsed:";
     static constexpr const char kMemPageTables[] = "PageTables:";
+    static constexpr const char kMemSecPageTables[] = "SecPageTables:";
     static constexpr const char kMemKernelStack[] = "KernelStack:";
     static constexpr const char kMemKReclaimable[] = "KReclaimable:";
     static constexpr const char kMemActive[] = "Active:";
@@ -61,15 +62,15 @@ class SysMemInfo final {
     static constexpr const char kMemCmaFree[] = "CmaFree:";
 
     static constexpr std::initializer_list<std::string_view> kDefaultSysMemInfoTags = {
-            SysMemInfo::kMemTotal,      SysMemInfo::kMemFree,         SysMemInfo::kMemBuffers,
-            SysMemInfo::kMemCached,     SysMemInfo::kMemShmem,        SysMemInfo::kMemSlab,
-            SysMemInfo::kMemSReclaim,   SysMemInfo::kMemSUnreclaim,   SysMemInfo::kMemSwapTotal,
-            SysMemInfo::kMemSwapFree,   SysMemInfo::kMemMapped,       SysMemInfo::kMemVmallocUsed,
-            SysMemInfo::kMemPageTables, SysMemInfo::kMemKernelStack,  SysMemInfo::kMemKReclaimable,
-            SysMemInfo::kMemActive,     SysMemInfo::kMemInactive,     SysMemInfo::kMemUnevictable,
-            SysMemInfo::kMemAvailable,  SysMemInfo::kMemActiveAnon,   SysMemInfo::kMemInactiveAnon,
-            SysMemInfo::kMemActiveFile, SysMemInfo::kMemInactiveFile, SysMemInfo::kMemCmaTotal,
-            SysMemInfo::kMemCmaFree,
+            SysMemInfo::kMemTotal,        SysMemInfo::kMemFree,          SysMemInfo::kMemBuffers,
+            SysMemInfo::kMemCached,       SysMemInfo::kMemShmem,         SysMemInfo::kMemSlab,
+            SysMemInfo::kMemSReclaim,     SysMemInfo::kMemSUnreclaim,    SysMemInfo::kMemSwapTotal,
+            SysMemInfo::kMemSwapFree,     SysMemInfo::kMemMapped,        SysMemInfo::kMemVmallocUsed,
+            SysMemInfo::kMemPageTables,   SysMemInfo::kMemSecPageTables, SysMemInfo::kMemKernelStack,
+            SysMemInfo::kMemKReclaimable, SysMemInfo::kMemActive,        SysMemInfo::kMemInactive,
+            SysMemInfo::kMemUnevictable,  SysMemInfo::kMemAvailable,     SysMemInfo::kMemActiveAnon,
+            SysMemInfo::kMemInactiveAnon, SysMemInfo::kMemActiveFile,    SysMemInfo::kMemInactiveFile,
+            SysMemInfo::kMemCmaTotal,     SysMemInfo::kMemCmaFree,
     };
 
     SysMemInfo() = default;
