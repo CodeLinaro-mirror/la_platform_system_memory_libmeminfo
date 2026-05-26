@@ -41,6 +41,7 @@ cc_test {
         "libziparchive",
         "libz",
     ],
+
     cflags: [
         "-Wall",
         "-Werror",

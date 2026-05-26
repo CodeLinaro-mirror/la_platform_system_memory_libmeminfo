@@ -18,7 +18,6 @@
 #include <gtest/gtest.h>
 #include <mntent.h>
 
-#include <iomanip>
 #include <regex>
 #include <set>
 
@@ -78,6 +77,22 @@ static std::set<std::string> getMounts() {
 
 using ::android::elfutils::ElfFile;
 
+static bool isSystemPartition(const std::string& path) {
+    static std::vector<std::string> system_partitions = {"/system", "/system_ext", "/product"};
+
+    for (const auto& prefix : system_partitions) {
+        if (android::base::StartsWith(path, prefix + "/")) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static bool isVendorPartition(const std::string path) {
+    return !isSystemPartition(path);
+}
+
 class ElfAlignmentTest : public ::testing::TestWithParam<std::string> {
   protected:
     static void loadAlignmentCb(ElfFile& elfFile) {
@@ -123,7 +138,7 @@ class ElfAlignmentTest : public ::testing::TestWithParam<std::string> {
                 elfFile, kRequiredMaxSupportedPageSize, errorMsg))
                 << "File " << path << " failed 16k compatibility check: " << errorMsg;
 
-        // Older toolchains  have a bug in both GNU ld and LLVM lld which causes
+        // Older toolchains have a bug in both GNU ld and LLVM lld which causes
         // the RELRO's end alignment to not respect the specified max-page-size.
         // See: https://developer.android.com/guide/practices/page-sizes#compile-r22-lower
         //
@@ -131,7 +146,7 @@ class ElfAlignmentTest : public ::testing::TestWithParam<std::string> {
         // updating vendor partitions due to GRF; only enfore this on /vendor/
         // starting from chipset version 202604 -- where it is implicitly required
         // in order to implement [GMS-VSR-3.14.1-004] and [GMS-VSR-3.14.1-005]
-        if (vendorApiLevel() < 202604 && android::base::StartsWith(path, "/vendor/")) {
+        if (vendorApiLevel() < 202604 && isVendorPartition(path)) {
             return;
         }
 
